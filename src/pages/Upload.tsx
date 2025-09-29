@@ -202,7 +202,7 @@ const Upload = () => {
                 )}`}
               >
                 <h3
-                  className={`text-2xl font-semibold mb-4 ${getTextColor(
+                  className={`text-3xl font-semibold mb-4 ${getTextColor(
                     result.image_analysis.prediction === "Healthy"
                   )}`}
                 >
@@ -238,7 +238,7 @@ const Upload = () => {
                 <p className="text-lg">
                   <strong>Pesticide Amount PPM: </strong> {result.dataset_analysis.pesticide_amount_ppm}
                 </p>
-                <p className="text-lg">
+                <p className="text-xl">
                   <strong>Growth Stage: </strong> {result.dataset_analysis.growth_stage}
                 </p>
                 </div>
