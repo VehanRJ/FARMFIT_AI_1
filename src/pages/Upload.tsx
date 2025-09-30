@@ -365,17 +365,18 @@ const Upload: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-xl mb-[1vh]">
-                  Prediction:{" "}
-                  <Badge
-                    variant={
-                      result.image_analysis.prediction === "Healthy"
-                        ? "default"
-                        : "destructive"
-                    }
-                  >
-                    {result.image_analysis.prediction}
-                  </Badge>
-                </p>
+  Prediction:{" "}
+  {result.image_analysis.prediction.map((item, index) => (
+    <Badge
+      key={index}
+      variant={item === "Healthy" ? "default" : "destructive"}
+      className="mr-2"
+    >
+      {item}
+    </Badge>
+  ))}
+</p>
+
                 <p className="text-xl mb-[1vh]">Confidence: {result.image_analysis.confidence}%</p>
                 <p className="text-xl mb-[1vh]">Solution: {result.image_analysis.solution}</p>
               </CardContent>

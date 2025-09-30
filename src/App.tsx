@@ -24,6 +24,7 @@ import PageWrapper from "./components/PageWrapper";
 import Navbarmini from "./components/Navbar_mini";
 import Layoutnew from "./components/Layout_new";
 import Indexcopy from "./pages/Indexcopy";
+import HomeLayout from "./components/HomeLayout";
 const CropHealth = lazy(() => import("./pages/CropHealth"));
 const LiveAlerts = lazy(() => import("./pages/LiveAlerts"));
 const Weather = lazy(() => import("./pages/Weather"));
@@ -38,7 +39,7 @@ function AnimatedRoutes() {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Layout><PageWrapper><Index /></PageWrapper></Layout>} />
+        <Route path="/" element={<HomeLayout><PageWrapper><Index /></PageWrapper></HomeLayout>} />
         <Route path="/login" element={<PageWrapper><Login /></PageWrapper>} />
         <Route path="/account-created" element={<PageWrapper><AccountCreated /></PageWrapper>} />
         <Route path="/logged-out" element={<PageWrapper><LoggedOut /></PageWrapper>} />
