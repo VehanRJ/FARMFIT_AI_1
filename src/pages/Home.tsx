@@ -147,7 +147,7 @@ const Home = () => {
           >
             <source src="/videos/hero.mp4" type="video/mp4" />
             Your browser does not support the video tag.
-          </video>
+          </video> 
           
           {/* Fallback background image - shows when video fails or doesn't load */}
           <div 
