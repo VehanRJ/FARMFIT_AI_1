@@ -5,7 +5,6 @@ import {
   Upload as UploadIcon,
   FileImage,
   FileSpreadsheet,
-  CheckCircle,
   AlertCircle,
   Loader2,
   X,
@@ -294,10 +293,7 @@ const Upload: React.FC = () => {
                           className={i === 0 ? "font-semibold" : "text-gray-600"}
                         >
                           {row.map((cell, j) => (
-                            <td
-                              key={j}
-                              className="border px-2 py-1 bg-white"
-                            >
+                            <td key={j} className="border px-2 py-1 bg-white">
                               {cell}
                             </td>
                           ))}
@@ -344,19 +340,19 @@ const Upload: React.FC = () => {
           className="mt-12"
         >
           <h2 className="text-3xl font-bold text-center mb-8 text-green-700">
-           Prediction Analysis Results
+            Prediction Analysis Results
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Image analysis */}
             <Card
               className={`${getResultBgColor(
-                result.image_analysis.prediction === "Healthy"
+                result.image_analysis.prediction.includes("Healthy")
               )}`}
             >
               <CardHeader>
                 <CardTitle
                   className={`flex items-center gap-3 text-2xl ${getTextColor(
-                    result.image_analysis.prediction === "Healthy"
+                    result.image_analysis.prediction.includes("Healthy")
                   )}`}
                 >
                   <Shield className="h-10 w-10" />
@@ -365,20 +361,25 @@ const Upload: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-xl mb-[1vh]">
-  Prediction:{" "}
-  {result.image_analysis.prediction.map((item, index) => (
-    <Badge
-      key={index}
-      variant={item === "Healthy" ? "default" : "destructive"}
-      className="mr-2"
-    >
-      {item}
-    </Badge>
-  ))}
-</p>
-
-                <p className="text-xl mb-[1vh]">Confidence: {result.image_analysis.confidence}%</p>
-                <p className="text-xl mb-[1vh]">Solution: {result.image_analysis.solution}</p>
+                  Prediction:{" "}
+                  {result.image_analysis.prediction.map(
+                    (item: string, index: number) => (
+                      <Badge
+                        key={index}
+                        variant={item === "Healthy" ? "default" : "destructive"}
+                        className="mr-2"
+                      >
+                        {item}
+                      </Badge>
+                    )
+                  )}
+                </p>
+                <p className="text-xl mb-[1vh]">
+                  Confidence: {result.image_analysis.confidence[0].toFixed(2)}%
+                </p>
+                <p className="text-xl mb-[1vh]">
+                  Solution: {result.image_analysis.solution}
+                </p>
               </CardContent>
             </Card>
 
@@ -392,22 +393,28 @@ const Upload: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-xl mb-[1vh]">
-                  Disease Risk: {result.dataset_analysis.disease_risk_percentage}
-                  %
+                  Disease Risk: {result.dataset_analysis.disease_risk_percentage}%
                 </p>
                 <p className="text-xl mb-[1vh]">
                   Status:{" "}
                   <Badge
-  variant={result.dataset_analysis.disease_observed === 0 ? "default" : "destructive"}
->
-  {result.dataset_analysis.disease_observed === 0 ? "Not Detected" : "Detected"}
-</Badge>
+                    variant={
+                      result.dataset_analysis.disease_observed === 0
+                        ? "default"
+                        : "destructive"
+                    }
+                  >
+                    {result.dataset_analysis.disease_observed === 0
+                      ? "Not Detected"
+                      : "Detected"}
+                  </Badge>
                 </p>
                 <p className="text-xl mb-[1vh]">
-                  Pesticide Level: {result.dataset_analysis.pesticide_amount_ppm}{" "}
-                  PPM
+                  Pesticide Level: {result.dataset_analysis.pesticide_amount_ppm} PPM
                 </p>
-                <p className="text-xl mb-[1vh]">Growth Stage: {result.dataset_analysis.growth_stage}</p>
+                <p className="text-xl mb-[1vh]">
+                  Growth Stage: {result.dataset_analysis.growth_stage}
+                </p>
               </CardContent>
             </Card>
           </div>
