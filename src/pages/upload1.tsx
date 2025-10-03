@@ -5,6 +5,7 @@ import {
   Upload as UploadIcon,
   FileImage,
   FileSpreadsheet,
+  CheckCircle,
   AlertCircle,
   Loader2,
   X,
@@ -189,7 +190,7 @@ const Upload: React.FC = () => {
       {/* Upload Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Image Upload */}
-        <Card className="h-[60vh] transition-all hover:shadow-lg">
+        <Card className="h-full transition-all hover:shadow-lg">
           <CardHeader>
             <CardTitle className="flex items-center gap-3 text-xl">
               <FileImage className="h-6 w-6 text-green-600" />
@@ -211,7 +212,7 @@ const Upload: React.FC = () => {
                 onDrop={(e) => handleDrop(e, "image")}
                 onClick={() => document.getElementById("image-input")?.click()}
               >
-                <UploadIcon className="mx-auto h-[16vh] w-10 text-green-600 mb-3" />
+                <UploadIcon className="mx-auto h-10 w-10 text-green-600 mb-3" />
                 <p className="text-gray-600">Drop or click to upload image</p>
                 <input
                   id="image-input"
@@ -264,7 +265,7 @@ const Upload: React.FC = () => {
                 onDrop={(e) => handleDrop(e, "csv")}
                 onClick={() => document.getElementById("csv-input")?.click()}
               >
-                <UploadIcon className="mx-auto h-[16vh] w-10 text-blue-600 mb-3" />
+                <UploadIcon className="mx-auto h-10 w-10 text-blue-600 mb-3" />
                 <p className="text-gray-600">Drop or click to upload CSV</p>
                 <input
                   id="csv-input"
@@ -293,7 +294,10 @@ const Upload: React.FC = () => {
                           className={i === 0 ? "font-semibold" : "text-gray-600"}
                         >
                           {row.map((cell, j) => (
-                            <td key={j} className="border px-2 py-1 bg-white">
+                            <td
+                              key={j}
+                              className="border px-2 py-1 bg-white"
+                            >
                               {cell}
                             </td>
                           ))}
@@ -339,47 +343,41 @@ const Upload: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="mt-12"
         >
-          <h2 className="text-3xl font-bold text-center mb-8 text-green-700">
-            Prediction Analysis Results
+          <h2 className="text-3xl font-bold text-center mb-8">
+            Analysis Results
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Image analysis */}
             <Card
               className={`${getResultBgColor(
-                result.image_analysis.prediction.includes("Healthy")
+                result.image_analysis.prediction === "Healthy"
               )}`}
             >
               <CardHeader>
                 <CardTitle
                   className={`flex items-center gap-3 text-2xl ${getTextColor(
-                    result.image_analysis.prediction.includes("Healthy")
+                    result.image_analysis.prediction === "Healthy"
                   )}`}
                 >
-                  <Shield className="h-10 w-10" />
+                  <Shield className="h-6 w-6" />
                   Image Analysis
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-xl mb-[1vh]">
+                <p>
                   Prediction:{" "}
-                  {result.image_analysis.prediction.map(
-                    (item: string, index: number) => (
-                      <Badge
-                        key={index}
-                        variant={item === "Healthy" ? "default" : "destructive"}
-                        className="mr-2"
-                      >
-                        {item}
-                      </Badge>
-                    )
-                  )}
+                  <Badge
+                    variant={
+                      result.image_analysis.prediction === "Healthy"
+                        ? "default"
+                        : "destructive"
+                    }
+                  >
+                    {result.image_analysis.prediction}
+                  </Badge>
                 </p>
-                <p className="text-xl mb-[1vh]">
-                  Confidence: {result.image_analysis.confidence[0].toFixed(2)}%
-                </p>
-                <p className="text-xl mb-[1vh]">
-                  Solution: {result.image_analysis.solution}
-                </p>
+                <p>Confidence: {result.image_analysis.confidence}%</p>
+                <p>Solution: {result.image_analysis.solution}</p>
               </CardContent>
             </Card>
 
@@ -387,34 +385,26 @@ const Upload: React.FC = () => {
             <Card className="bg-blue-50 border-blue-200">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-2xl text-blue-800">
-                  <TrendingUp className="h-10 w-10" />
+                  <TrendingUp className="h-6 w-6" />
                   Dataset Analysis
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-xl mb-[1vh]">
-                  Disease Risk: {result.dataset_analysis.disease_risk_percentage}%
+                <p>
+                  Disease Risk: {result.dataset_analysis.disease_risk_percentage}
+                  %
                 </p>
-                <p className="text-xl mb-[1vh]">
+                <p>
                   Status:{" "}
-                  <Badge
-                    variant={
-                      result.dataset_analysis.disease_observed === 0
-                        ? "default"
-                        : "destructive"
-                    }
-                  >
-                    {result.dataset_analysis.disease_observed === 0
-                      ? "Not Detected"
-                      : "Detected"}
-                  </Badge>
+                  {result.dataset_analysis.disease_observed === 1
+                    ? "Detected"
+                    : "Not Detected"}
                 </p>
-                <p className="text-xl mb-[1vh]">
-                  Pesticide Level: {result.dataset_analysis.pesticide_amount_ppm} PPM
+                <p>
+                  Pesticide Level: {result.dataset_analysis.pesticide_amount_ppm}{" "}
+                  PPM
                 </p>
-                <p className="text-xl mb-[1vh]">
-                  Growth Stage: {result.dataset_analysis.growth_stage}
-                </p>
+                <p>Growth Stage: {result.dataset_analysis.growth_stage}</p>
               </CardContent>
             </Card>
           </div>
